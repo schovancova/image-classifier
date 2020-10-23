@@ -1,0 +1,56 @@
+version: "3.8"
+services:
+  parser:
+    build:
+      context: .
+      dockerfile: modules/dockerfiles/parser.Dockerfile
+    environment:
+      - LOG_LEVEL=$LOG_LEVEL
+    container_name: module_parser
+    volumes:
+      - images:/images
+    networks:
+      - base-network
+    depends_on:
+      - "nats-server"
+  image_handler:
+    build:
+      context: .
+      dockerfile: modules/dockerfiles/image_handler.Dockerfile
+    environment:
+      - LOG_LEVEL=$LOG_LEVEL
+    container_name: module_image_handler
+    volumes:
+      - images:/images
+    networks:
+      - base-network
+    depends_on:
+      - "nats-server"
+  classifier:
+    build:
+      context: .
+      dockerfile: modules/dockerfiles/classifier.Dockerfile
+    environment:
+      - LOG_LEVEL=$LOG_LEVEL
+    container_name: module_classifier
+    volumes:
+      - images:/images
+    networks:
+      - base-network
+    depends_on:
+      - "nats-server"
+  nats-server:
+    image: "nats:latest"
+    #command: -DV  #  enable this for debug and trace
+    container_name: nats-server
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+      - "6222:6222"
+    networks:
+      - base-network
+networks:
+  base-network:
+    driver: bridge
+volumes:
+  images:

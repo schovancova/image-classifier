@@ -1,0 +1,30 @@
+Zde je zadání - napište jednoduchou třídičku obrázků podle barvy.
+
+Základní popis:
+
+Jedná se o systém na bázi mikroservis, který se skládá ze tří modulů, které spolu komunikují přes MQ brokera (Nats, Kafka, RabbitMQ, apod.)
+
+První modul generuje obrázky do systému, tzn. vezme obsah složky, projde soubory a postupně je odešle do systému.
+Druhý modul spočítá průměrnou barvu v obrázku a nasledně pošle zpět do systému obrázek i barvu.
+Třetí modul podle RGB barvy uloží obrázek do složky podle barvy (red, blue, atd.)
+Tato třídička může být volitelně rozšířená o možnost grafického rozhraní, které bude umět poslat obrázek do systému a zobrazit jeho výsledek roztřízení (obrázek spolu s průměrnou RGB hodnotou a převodu na textovou podobu).
+
+
+
+Technické požadavky a užitečné odkazy:
+
+Jednotlivé moduly budou bežet jako Docker image.
+Moduly spolu musí komunikovat přes MQ brokera.
+Moduly by si měly validovat vstupy.
+Požadujeme zakomponovat do kódu zakladní unit testy.
+Řešení by mělo běžet v Kubernetes, nebo alespoň v Docker compose.
+Projekt bude vypracován v jazyce Python.
+Pro instalaci Kubernetes můžete použit zjednodušenou verzi minikube - https://kubernetes.io/docs/setup/learning-environment/minikube/
+Pro práci s obrázky ideálně používejte knihovnu OpenCV/numpy
+Jak načíst obrázek - https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_gui/py_image_display/py_image_display.html#read-an-image
+Výpočet průměrné hodnoty barvy - https://numpy.org/doc/stable/reference/generated/numpy.mean.html
+Jako názvy barev bude sloužit webcolor - https://en.wikipedia.org/wiki/Web_colors
+Jako MQ brokera nyní používáme NATs, ale pokud máte zkušenosti s jiným (RabbitMQ, Kafka atd.), není to problém.
+
+
+Rešení prosím odevzdejte formou odkazu na Git repozitář. Připojte prosím Readme, s popisem, jak to nainstalovat.
